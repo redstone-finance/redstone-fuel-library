@@ -12,10 +12,10 @@ on:
 env:
   CARGO_TERM_COLOR: always
   RUST_VERSION: 1.69.0
-  FORC_VERSION: 0.40.1
+  FORC_VERSION: 0.35.5
   
 jobs:
-  build-lib:
+  test-redstone-fuel-sdk:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
