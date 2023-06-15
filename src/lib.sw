@@ -1,6 +1,4 @@
-library redstone;
+library;
 
-dep config;
-dep crypto;
-dep processor;
-dep protocol;
+pub mod utils;
+pub mod core;

@@ -1,9 +1,7 @@
-library numbers;
+library;
 
-dep from_bytes;
-
-use std::{bytes::Bytes, u256::U256};
-use from_bytes::FromBytes;
+use std::{bytes::Bytes, constants::ZERO_B256, u256::U256};
+use ::utils::from_bytes::FromBytes;
 
 impl U256 {
     pub fn from_u64(number: u64) -> U256 {
@@ -20,7 +18,7 @@ impl b256 {
     pub fn from_u64(number: u64) -> b256 {
         let number_u256 = U256::from_u64(number);
 
-        let mut value = 0x0000000000000000000000000000000000000000000000000000000000000000;
+        let mut value = ZERO_B256;
         let ptr = __addr_of(value);
         let val = __addr_of(number_u256).copy_to::<b256>(ptr, 1);
 

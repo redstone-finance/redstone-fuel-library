@@ -1,4 +1,4 @@
-library validation;
+library;
 
 // 2621440000 + data_package_index
 pub const TIMESTAMP_OUT_OF_RANGE = 0x9C40_0000;

@@ -1,4 +1,4 @@
-library from_bytes;
+library;
 
 use std::bytes::Bytes;
 

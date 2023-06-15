@@ -1,13 +1,9 @@
-library protocol;
-
-dep utils/bytes;
-dep crypto;
-dep utils/from_bytes;
+library;
 
 use std::{bytes::*, logging::log, u256::U256, vec::Vec, vm::evm::evm_address::EvmAddress};
-use bytes::*;
-use crypto::recover_signer_address;
-use from_bytes::FromBytes;
+use ::utils::bytes::*;
+use ::core::crypto::recover_signer_address;
+use ::utils::from_bytes::FromBytes;
 
 const REDSTONE_MARKER = [0x00, 0x00, 0x02, 0xed, 0x57, 0x01, 0x1e, 0x00, 0x00];
 const REDSTONE_MARKER_BS = 9;

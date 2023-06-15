@@ -1,9 +1,7 @@
-library sample;
-
-dep utils/bytes;
+library;
 
 use std::{bytes::*};
-use bytes::*;
+use ::utils::bytes::*;
 
 pub const SAMPLE_SIGNER_ADDRESS_0 = 0x00000000000000000000000012470f7aBA85c8b81D63137DD5925D6EE114952b;
 pub const SAMPLE_SIGNER_ADDRESS_1 = 0x0000000000000000000000001ea62d73edf8ac05dfcea1a34b9796e937a29eff;
@@ -16,24 +14,24 @@ pub struct SampleDataPackage {
     signable_bytes: Bytes,
     signature_r: b256,
     signature_s: b256,
-    signature_v: u64,
+    signature_v: u8,
     signer_address: b256,
 }
 
 struct SampleDataPackageInput {
-    initial: [u64; 3],
-    number_of_mid_zeroes: u64,
+    initial: [u8; 3],
+    number_of_mid_zeroes: u8,
     number_low: b256,
     signature_r: b256,
     signature_s: b256,
-    signature_v: u64,
+    signature_v: u8,
     signer_address: b256,
 }
 
 pub const SAMPLE_ID_V27 = 0;
 pub const SAMPLE_ID_V28 = 1;
 
-const samples = [
+const SAMPLES = [
     // 77 bytes are split into 3 parts, the first one consists of 3 bytes, the last one consists of 18 bytes + 14 bytes of zero-bytes, so we have 77-(3+18+14) = 42 zero-bytes inside:
     // 0x45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002603c77cf6018697ef555000000020000001
     // signature: 0x54bc55649dbae70cbf6279bc68485dfdd3d4915e0baae54e252af69f4c012faf34465a4d835255391ddfd36736b6d8dcd3fbb0ff5798419ea8c287936680bfc31b
@@ -95,7 +93,7 @@ const samples = [
 
 impl SampleDataPackage {
     pub fn sample(index: u64) -> Self {
-        let input = samples[index];
+        let input = SAMPLES[index];
 
         return Self {
             signature_r: input.signature_r,
@@ -147,7 +145,7 @@ impl SamplePayload {
             bytes.push(0x00);
             i += 1;
         }
-        bytes.push(self.data_packages.len);  // number of data packages
+        bytes.push(self.data_packages.len); // number of data packages
         i = 0;
         while (i < UNSIGNED_METADATA_BYTE_SIZE_BS) {
             bytes.push(0x00);

@@ -1,12 +1,10 @@
-library crypto;
-
-dep utils/bytes;
-dep sample;
+library;
 
 use std::{
     b256::*,
     b512::*,
     bytes::*,
+    constants::ZERO_B256,
     ecr::{
         ec_recover,
         EcRecoverError,
@@ -16,8 +14,9 @@ use std::{
     vm::evm::ecr::ec_recover_evm_address,
     vm::evm::evm_address::EvmAddress,
 };
-use bytes::*;
-use sample::{SAMPLE_ID_V27, SAMPLE_ID_V28, SampleDataPackage};
+use ::utils::bytes::*;
+
+use ::core::sample::{SAMPLE_ID_V27, SAMPLE_ID_V28, SampleDataPackage};
 
 pub fn recover_signer_address(signature_bytes: Bytes, signable_bytes: Bytes) -> EvmAddress {
     let (r_bytes, mut s_bytes) = signature_bytes.slice_tail_offset(32, 1);
@@ -36,7 +35,7 @@ fn recover_public_address(
     v: u64,
     msg_hash: b256,
 ) -> Result<EvmAddress, EcRecoverError> {
-    let mut v_256: b256 = 0x0000000000000000000000000000000000000000000000000000000000000000;
+    let mut v_256: b256 = ZERO_B256;
     if (v == 28) {
         v_256 = 0x0000000000000000000000000000000000000000000000000000000000000001;
     }
