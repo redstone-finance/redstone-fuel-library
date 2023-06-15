@@ -1,15 +1,10 @@
-library config_validation;
-
-dep protocol;
-dep config;
-dep validation;
-dep utils/numbers;
+library;
 
 use std::u256::U256;
-use protocol::{DataPackage, Payload};
-use config::Config;
-use validation::*;
-use numbers::*;
+use ::core::protocol::{DataPackage, Payload};
+use ::core::config::Config;
+use ::core::validation::*;
+use ::utils::numbers::*;
 
 /// 655360000 + feed_index
 pub const INSUFFICIENT_SIGNER_COUNT = 0x2710_0000;
@@ -54,6 +49,7 @@ impl Validation for Config {
 
         if s.is_none() {
             log(data_package.signer_address.value);
+            log(index);
             // revert(SIGNER_NOT_RECOGNIZED + index);
         }
 

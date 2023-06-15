@@ -1,11 +1,8 @@
-library bytes;
-
-dep numbers;
-dep from_bytes;
+library;
 
 use std::{b256::*, bytes::*, math::*, u256::U256};
-use numbers::*;
-use from_bytes::FromBytes;
+use ::utils::numbers::*;
+use ::utils::from_bytes::FromBytes;
 
 impl Bytes {
     pub fn slice_tail_offset(self, tail_size: u64, tail_offset: u64) -> (Bytes, Bytes) {
@@ -71,7 +68,7 @@ impl FromBytes for U256 {
             if (n < 8) {
                 m = n;
             }
-            let (rest, num) = bytes.slice_number_offset(m, o);
+            let (_, num) = bytes.slice_number_offset(m, o);
             parts.push(num);
 
             n -= m;

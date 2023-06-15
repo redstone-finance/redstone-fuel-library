@@ -1,9 +1,7 @@
-library config;
-
-dep utils/vec;
+library;
 
 use std::{option::*, u256::U256};
-use vec::{value_index, value_index_b256};
+use ::utils::vec::{value_index, value_index_b256};
 
 pub struct Config {
     signers: Vec<b256>,

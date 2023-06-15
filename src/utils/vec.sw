@@ -1,4 +1,4 @@
-library vec;
+library;
 
 use std::{u256::U256, vec::*};
 
@@ -43,10 +43,10 @@ pub fn sort(ref mut vec: Vec<U256>) {
     }
 }
 
-fn vec_log(vec: Vec<U256>) {
-    let mut i = 0;
-    while (i < vec.len) {
-        log(vec.get(i).unwrap());
-        i += 1;
-    }
-}
+// fn vec_log(vec: Vec<U256>) {
+//     let mut i = 0;
+//     while (i < vec.len) {
+//         log(vec.get(i).unwrap());
+//         i += 1;
+//     }
+// }

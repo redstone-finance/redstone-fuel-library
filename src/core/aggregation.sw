@@ -1,11 +1,8 @@
-library aggregation;
-
-dep utils/vec;
-dep utils/numbers;
+library;
 
 use std::{u256::U256, vec::*};
-use vec::sort;
-use numbers::*;
+use ::utils::vec::sort;
+use ::utils::numbers::*;
 
 pub fn aggregate_results(results: Vec<Vec<U256>>) -> Vec<U256> {
     let mut aggregated = Vec::new();
@@ -24,10 +21,6 @@ pub fn aggregate_results(results: Vec<Vec<U256>>) -> Vec<U256> {
 fn aggregate_values(values: Vec<U256>) -> U256 {
     let mut values = values;
     sort(values);
-    let mut j = 0;
-    while (j < values.len) {
-        j += 1;
-    }
 
     let mid = values.len / 2;
 
@@ -111,5 +104,5 @@ fn test_aggregate_three_other_values() {
 #[test(should_revert)]
 fn test_aggregate_zero_values() {
     let data = Vec::new();
-    aggregate_values(data);
+    let _ = aggregate_values(data);
 }
