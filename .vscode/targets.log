@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `all'.  Stop.
 
 
-# Make data base, printed on Mon Apr  8 14:53:31 2024
+# Make data base, printed on Mon Apr  8 15:04:28 2024
 
 # Variables
 
@@ -43,11 +43,9 @@ INFOPATH = /opt/homebrew/share/info:
 # environment
 VSCODE_CWD = /
 # environment
-PATH = /usr/local/opt/curl-openssl/bin:/Users/lukaszkalbarczyk/.wasmtime/bin:/opt/homebrew/opt/llvm/bin:/opt/homebrew/opt/node@18/bin:/Users/lukaszkalbarczyk/Devel/fuel-core/target/debug:/Users/lukaszkalbarczyk/Devel/sway/target/release:/opt/homebrew/opt/mongodb-community@5.0/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/opt/ruby@2.6/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Users/lukaszkalbarczyk/.cargo/bin:/Users/lukaszkalbarczyk/.protostar/dist/protostar:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:/Users/lukaszkalbarczyk/.local/bin
+PATH = /Users/lukaszkalbarczyk/.fuelup/bin:/usr/local/opt/curl-openssl/bin:/Users/lukaszkalbarczyk/.wasmtime/bin:/opt/homebrew/opt/llvm/bin:/opt/homebrew/opt/node@18/bin:/Users/lukaszkalbarczyk/Devel/fuel-core/target/debug:/Users/lukaszkalbarczyk/Devel/sway/target/release:/opt/homebrew/opt/mongodb-community@5.0/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/opt/ruby@2.6/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Users/lukaszkalbarczyk/.starkli/bin:/Users/lukaszkalbarczyk/.cargo/bin:/Users/lukaszkalbarczyk/.dojo/bin:/Users/lukaszkalbarczyk/.protostar/dist/protostar:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:/Users/lukaszkalbarczyk/.local/bin
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
-# environment
-LaunchInstanceID = E072B8A3-8129-4551-AE95-0621EF430638
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # default
@@ -73,7 +71,7 @@ HOME = /Users/lukaszkalbarczyk
 # default
 MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/lukaszkalbarczyk/Library/Application Support/Code/CachedData/863d2581ecda6849923a2118d93a088b0745d9d6
+VSCODE_CODE_CACHE_PATH = /Users/lukaszkalbarczyk/Library/Application Support/Code/CachedData/5c3e652f63e798a5ac2f31ffd0d863669328dc4c
 # environment
 LOGNAME = lukaszkalbarczyk
 # environment
@@ -115,7 +113,7 @@ TMPDIR = /var/folders/y_/bdw_kv2d0lbcvj8s0dp_30rm0000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/lukaszkalbarczyk/Library/Application Support/Code/1.87-main.sock
+VSCODE_IPC_HOOK = /Users/lukaszkalbarczyk/Library/Application Support/Code/1.88-main.sock
 # environment
 MallocNanoZone = 0
 # makefile
@@ -125,13 +123,11 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.119434899.119434906
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.122999308.122999315
 # environment
 HOMEBREW_PREFIX = /opt/homebrew
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
-# environment
-VSCODE_L10N_BUNDLE_LOCATION = 
 # automatic
 +F = $(notdir $+)
 # environment
@@ -148,8 +144,6 @@ MAKEFILES :=
 PAGER = less
 # environment
 LC_ALL = C
-# environment
-SECURITYSESSIONID = 186ab
 # automatic
 ^F = $(notdir $^)
 # default
@@ -161,9 +155,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 1436
+VSCODE_PID = 19011
 # variable set hash-table stats:
-# Load=74/1024=7%, Rehash=0, Collisions=1/98=1%
+# Load=71/1024=7%, Rehash=0, Collisions=1/95=1%
 
 # Pattern-specific Variable Values
 
@@ -196,7 +190,6 @@ all:
 #  Modification time never checked.
 #  File has not been updated.
 
- 
 format:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -241,6 +234,6 @@ test: format
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Apr  8 14:53:31 2024
+# Finished Make data base on Mon Apr  8 15:04:28 2024
 
  
