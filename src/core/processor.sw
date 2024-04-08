@@ -192,6 +192,7 @@ fn make_config(
 
     let mut signers = Vec::new();
     signers.push(SAMPLE_SIGNER_ADDRESS_0);
+
     if (with_second_signer) {
         signers.push(SAMPLE_SIGNER_ADDRESS_1);
     }

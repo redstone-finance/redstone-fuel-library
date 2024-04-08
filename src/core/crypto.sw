@@ -13,15 +13,15 @@ use std::{
     vm::evm::ecr::ec_recover_evm_address,
     vm::evm::evm_address::EvmAddress,
 };
-use ::utils::bytes::*;
 use std::bytes_conversions::b256::*;
+use ::utils::bytes::*;
 use ::core::sample::{SAMPLE_ID_V27, SAMPLE_ID_V28, SampleDataPackage};
 
 pub fn recover_signer_address(signature_bytes: Bytes, signable_bytes: Bytes) -> EvmAddress {
     let (r_bytes, mut s_bytes) = signature_bytes.slice_tail_offset(32, 1);
     let v = signature_bytes.get(signature_bytes.len - 1).unwrap();
-    let r_number = b256::from_le_bytes(r_bytes);
-    let s_number = b256::from_le_bytes(s_bytes);
+    let r_number = b256::from_be_bytes(r_bytes);
+    let s_number = b256::from_be_bytes(s_bytes);
 
     let mut hasher = Hasher::new();
     hasher.write(signable_bytes);
