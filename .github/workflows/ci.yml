@@ -1,29 +1,25 @@
 
-name: CI
+name: Fuel SDK Sway CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "*" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "*" ]
 
   workflow_dispatch:
   
 env:
   CARGO_TERM_COLOR: always
-  RUST_VERSION: 1.69.0
-  FORC_VERSION: 0.40.1
+  FORC_VERSION: 0.49.3
   
 jobs:
   test-redstone-fuel-sdk:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
-      - name: Install toolchain
-        uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: ${{ env.RUST_VERSION }}
-      - uses: Swatinem/rust-cache@v2
+      - name: Setup Rust PATH
+        run: echo "$HOME/.cargo/bin:$PATH" >> $GITHUB_PATH
       - name: Install Forc
         run: cargo install forc --version ${{ env.FORC_VERSION }}
       - name: Test RedStone Fuel SDK
