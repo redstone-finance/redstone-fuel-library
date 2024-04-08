@@ -49,10 +49,9 @@ impl FromBytes for DataPoint {
 impl FromBytes for Payload {
     fn from_bytes(bytes: Bytes) -> Payload {
         let (marker_rest, marker_bytes) = bytes.slice_tail(REDSTONE_MARKER_BS);
-
         let mut i = 0;
         while (i < REDSTONE_MARKER_BS) {
-            if (marker_bytes.get(i).unwrap() != REDSTONE_MARKER[i]) {
+            if (marker_bytes.get(i).unwrap().as_u64() != REDSTONE_MARKER[i]) {
                 revert(WRONG_REDSTONE_MARKER + i);
             }
 

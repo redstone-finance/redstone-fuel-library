@@ -2,6 +2,7 @@ library;
 
 use std::{bytes::Bytes, constants::ZERO_B256, u256::U256};
 use ::utils::from_bytes::FromBytes;
+use std::{primitive_conversions::{u32::*, u64::*,},};
 
 impl U256 {
     pub fn from_u64(number: u64) -> U256 {
@@ -32,8 +33,8 @@ impl FromBytes for u64 {
         let mut i = 0;
         let mut number: u64 = 0;
         while (i < bytes.len) {
-            let exp = u64::pow(256, bytes.len - i - 1);
-            let base: u64 = bytes.get(i).unwrap();
+            let exp = u64::pow(256, (bytes.len - i - 1).try_as_u32().unwrap());
+            let base: u64 = bytes.get(i).unwrap().as_u64();
             number += (base * exp);
 
             i += 1;
