@@ -1,30 +1,36 @@
 library;
 
 use std::bytes::*;
-use ::utils::bytes::*;
+use ::utils::{bytes::*, vec::*};
+
 pub const SAMPLE_SIGNER_ADDRESS_0 = 0x00000000000000000000000012470f7aBA85c8b81D63137DD5925D6EE114952b;
 pub const SAMPLE_SIGNER_ADDRESS_1 = 0x0000000000000000000000001ea62d73edf8ac05dfcea1a34b9796e937a29eff;
+
 pub struct SamplePayload {
-    data_packages: Vec<SampleDataPackage>,
+    pub data_packages: Vec<SampleDataPackage>,
 }
+
 pub struct SampleDataPackage {
-    signable_bytes: Bytes,
-    signature_r: b256,
-    signature_s: b256,
-    signature_v: u8,
-    signer_address: b256,
+    pub signable_bytes: Bytes,
+    pub signature_r: b256,
+    pub signature_s: b256,
+    pub signature_v: u8,
+    pub signer_address: b256,
 }
+
 struct SampleDataPackageInput {
-    initial: [u8; 3],
-    number_of_mid_zeroes: u8,
-    number_low: b256,
-    signature_r: b256,
-    signature_s: b256,
-    signature_v: u8,
-    signer_address: b256,
+    pub initial: [u8; 3],
+    pub number_of_mid_zeroes: u8,
+    pub number_low: b256,
+    pub signature_r: b256,
+    pub signature_s: b256,
+    pub signature_v: u8,
+    pub signer_address: b256,
 }
+
 pub const SAMPLE_ID_V27 = 0;
 pub const SAMPLE_ID_V28 = 1;
+
 const SAMPLES = [
     // 77 bytes are split into 3 parts, the first one consists of 3 bytes, the last one consists of 18 bytes + 14 bytes of zero-bytes, so we have 77-(3+18+14) = 42 zero-bytes inside:
     // 0x45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002603c77cf6018697ef555000000020000001
@@ -84,10 +90,12 @@ const SAMPLES = [
         signer_address: SAMPLE_SIGNER_ADDRESS_1,
     },
 ];
+
 impl SampleDataPackage {
     pub fn sample(index: u64) -> Self {
         let input = SAMPLES[index];
-        return Self {
+
+        Self {
             signature_r: input.signature_r,
             signature_s: input.signature_s,
             signature_v: input.signature_v,
@@ -96,31 +104,33 @@ impl SampleDataPackage {
         }
     }
     pub fn signature_bytes(self) -> Bytes {
-        return signature_bytes(self.signature_r, self.signature_s, self.signature_v);
+        signature_bytes(self.signature_r, self.signature_s, self.signature_v)
+    }
+
+    pub fn bytes(self) -> Bytes {
+        self.signable_bytes.join(self.signature_bytes())
     }
 }
-impl SampleDataPackage {
-    fn bytes(self) -> Bytes {
-        return self.signable_bytes.join(self.signature_bytes());
-    }
-}
+
 impl SamplePayload {
-    fn sample(indices: Vec<u64>) -> SamplePayload {
+    pub fn sample(indices: Vec<u64>) -> SamplePayload {
         let mut data_packages = Vec::new();
         let mut i = 0;
-        while (i < indices.len) {
+        while (i < indices.len()) {
             data_packages.push(SampleDataPackage::sample(indices.get(i).unwrap()));
             i += 1;
         }
-        return Self { data_packages }
+
+        Self { data_packages }
     }
+
     pub fn bytes(self) -> Bytes {
         const REDSTONE_MARKER = [0x00, 0x00, 0x02, 0xed, 0x57, 0x01, 0x1e, 0x00, 0x00];
         const UNSIGNED_METADATA_BYTE_SIZE_BS = 3;
         const DATA_PACKAGES_COUNT_BS = 2;
         let mut bytes = Bytes::new();
         let mut i = 0;
-        while (i < self.data_packages.len) {
+        while (i < self.data_packages.len()) {
             bytes.append(self.data_packages.get(i).unwrap().bytes());
             i += 1;
         }
@@ -129,7 +139,7 @@ impl SamplePayload {
             bytes.push(0x00);
             i += 1;
         }
-        bytes.push(self.data_packages.len.try_as_u8().unwrap()); // number of data packages
+        bytes.push(self.data_packages.len().try_as_u8().unwrap()); // number of data packages
         i = 0;
         while (i < UNSIGNED_METADATA_BYTE_SIZE_BS) {
             bytes.push(0x00);
@@ -140,9 +150,23 @@ impl SamplePayload {
             bytes.push(REDSTONE_MARKER[i]);
             i += 1;
         }
-        return bytes;
+
+        bytes
+    }
+
+    pub fn big_timestamp_span() -> SamplePayload {
+        Self::sample(Vec::new().with(SAMPLE_ID_V27).with(SAMPLE_ID_V28))
+    }
+
+    pub fn eth_btc_2x2() -> SamplePayload {
+        Self::sample(Vec::new().with(2).with(3).with(4).with(5))
+    }
+
+    pub fn eth_btc_2plus1() -> SamplePayload {
+        Self::sample(Vec::new().with(2).with(3).with(4))
     }
 }
+
 fn signable_bytes(initial: [u8; 3], number_of_mid_zeroes: u8, number_low: b256) -> Bytes {
     let mut signable_bytes = Bytes::new();
     signable_bytes.push(initial[0]);
@@ -154,35 +178,14 @@ fn signable_bytes(initial: [u8; 3], number_of_mid_zeroes: u8, number_low: b256) 
         i += 1;
     }
     signable_bytes.append(Bytes::from(number_low));
-    return signable_bytes;
+
+    signable_bytes
 }
+
 fn signature_bytes(r: b256, s: b256, v: u8) -> Bytes {
     let mut signature_bytes = Bytes::from(r);
     signature_bytes.append(Bytes::from(s));
     signature_bytes.push(v);
-    return signature_bytes;
-}
 
-impl SamplePayload {
-    pub fn big_timestamp_span() -> SamplePayload {
-        let mut indices = Vec::new();
-        indices.push(SAMPLE_ID_V27);
-        indices.push(SAMPLE_ID_V28);
-        return Self::sample(indices);
-    }
-    pub fn eth_btc_2x2() -> SamplePayload {
-        let mut indices = Vec::new();
-        indices.push(2);
-        indices.push(3);
-        indices.push(4);
-        indices.push(5);
-        return Self::sample(indices);
-    }
-    pub fn eth_btc_2plus1() -> SamplePayload {
-        let mut indices = Vec::new();
-        indices.push(2);
-        indices.push(3);
-        indices.push(4);
-        return Self::sample(indices);
-    }
+    signature_bytes
 }
