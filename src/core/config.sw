@@ -1,29 +1,29 @@
 library;
 
-use std::{option::*, u256::U256};
-use ::utils::vec::{value_index, value_index_b256};
+use std::option::*;
+use ::utils::vec::*;
 
 pub struct Config {
-    signers: Vec<b256>,
-    feed_ids: Vec<U256>,
-    signer_count_threshold: u64,
-    block_timestamp: u64, // unix
+    pub signers: Vec<b256>,
+    pub feed_ids: Vec<u256>,
+    pub signer_count_threshold: u64,
+    pub block_timestamp: u64, // unix
 }
 
 impl Config {
     pub fn cap(self) -> u64 {
-        return self.signers.len * self.feed_ids.len;
+        self.signers.len() * self.feed_ids.len()
     }
 
     pub fn signer_index(self, signer: b256) -> Option<u64> {
-        return value_index_b256(self.signers, signer);
+        self.signers.index_of(signer)
     }
 
-    pub fn feed_id_index(self, feed_id: U256) -> Option<u64> {
-        return value_index(self.feed_ids, feed_id);
+    pub fn feed_id_index(self, feed_id: u256) -> Option<u64> {
+        self.feed_ids.index_of(feed_id)
     }
 
     pub fn index(self, feed_id_index: u64, signer_index: u64) -> u64 {
-        return self.signers.len * feed_id_index + signer_index
+        self.signers.len() * feed_id_index + signer_index
     }
 }

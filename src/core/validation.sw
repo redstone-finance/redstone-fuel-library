@@ -1,7 +1,6 @@
 library;
 
-// 2621440000 + data_package_index
-pub const TIMESTAMP_OUT_OF_RANGE = 0x9C40_0000;
+use ::core::errors::*;
 
 const MAX_DATA_TIMESTAMP_DELAY_SECONDS = 900; // 15 * 60
 const MAX_DATA_TIMESTAMP_AHEAD_SECONDS = 180; // 3 * 60

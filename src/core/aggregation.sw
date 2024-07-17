@@ -1,108 +1,44 @@
 library;
 
-use std::{u256::U256, vec::*};
-use ::utils::vec::sort;
-use ::utils::numbers::*;
+use std::vec::*;
+use ::utils::{from_bytes::*, vec::*};
 
-pub fn aggregate_results(results: Vec<Vec<U256>>) -> Vec<U256> {
-    let mut aggregated = Vec::new();
+impl Vec<Vec<u256>> {
+    pub fn aggregated(self) -> Vec<u256> {
+        let mut aggregated = Vec::new();
+        let mut i = 0;
+        while (i < self.len()) {
+            let values = self.get(i).unwrap();
+            aggregated.push(values.median());
+            i += 1;
+        }
 
-    let mut i = 0;
-    while (i < results.len) {
-        let values = results.get(i).unwrap();
-        aggregated.push(aggregate_values(values));
-
-        i += 1;
+        aggregated
     }
-
-    return aggregated;
-}
-
-fn aggregate_values(values: Vec<U256>) -> U256 {
-    let mut values = values;
-    sort(values);
-
-    let mid = values.len / 2;
-
-    if (values.len - 2 * mid == 1) {
-        return values.get(mid).unwrap();
-    }
-
-    return (values.get(mid).unwrap() + values.get(mid - 1).unwrap()).rsh(1);
 }
 
 #[test]
-fn test_aggregate_single_value() {
-    let mut data = Vec::new();
-    data.push(U256::from_u64(333));
+fn test_aggregate_results() {
+    let mut results = Vec::new();
+    let mut aggr = Vec::new();
+    let mut prices1 = Vec::new();
+    prices1.push(0x222u256);
+    aggr.push(0x222u256);
 
-    let aggregated = aggregate_values(data);
-    assert(aggregated == U256::from_u64(333));
-}
+    let mut prices2 = Vec::new();
+    prices2.push(0x333u256);
+    prices2.push(0x111u256);
+    prices2.push(0x222u256);
+    aggr.push(0x222u256);
 
-#[test]
-fn test_aggregate_two_values() {
-    let mut data = Vec::new();
-    data.push(U256::from_u64(333));
-    data.push(U256::from_u64(222));
+    let mut prices3 = Vec::new();
+    prices3.push(0x555u256);
+    prices3.push(0x111u256);
+    aggr.push(0x333u256);
 
-    let aggregated = aggregate_values(data);
-    assert(aggregated == U256::from_u64(277));
-}
+    results.push(prices1);
+    results.push(prices2);
+    results.push(prices3);
 
-#[test]
-fn test_aggregate_three_values() {
-    let mut data = Vec::new();
-
-    data.push(U256::from_u64(444));
-    data.push(U256::from_u64(222));
-    data.push(U256::from_u64(333));
-
-    let aggregated = aggregate_values(data);
-    assert(aggregated == U256::from_u64(333));
-}
-
-#[test]
-fn test_aggregate_four_values() {
-    let mut data = Vec::new();
-
-    data.push(U256::from_u64(444));
-    data.push(U256::from_u64(222));
-    data.push(U256::from_u64(111));
-    data.push(U256::from_u64(555));
-
-    let aggregated = aggregate_values(data);
-    assert(aggregated == U256::from_u64(333));
-}
-
-#[test]
-fn test_aggregate_five_values() {
-    let mut data = Vec::new();
-
-    data.push(U256::from_u64(444));
-    data.push(U256::from_u64(222));
-    data.push(U256::from_u64(111));
-    data.push(U256::from_u64(333));
-    data.push(U256::from_u64(555));
-
-    let aggregated = aggregate_values(data);
-    assert(aggregated == U256::from_u64(333));
-}
-
-#[test]
-fn test_aggregate_three_other_values() {
-    let mut data = Vec::new();
-
-    data.push(U256::from_u64(222));
-    data.push(U256::from_u64(222));
-    data.push(U256::from_u64(333));
-
-    let aggregated = aggregate_values(data);
-    assert(aggregated == U256::from_u64(222));
-}
-
-#[test(should_revert)]
-fn test_aggregate_zero_values() {
-    let data = Vec::new();
-    let _ = aggregate_values(data);
+    assert(results.aggregated() == aggr);
 }
