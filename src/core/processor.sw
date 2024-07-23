@@ -5,6 +5,13 @@ use ::protocol::payload::Payload;
 use ::utils::sample::{SAMPLE_SIGNER_ADDRESS_0, SAMPLE_SIGNER_ADDRESS_1, SamplePayload,};
 use ::core::{aggregation::*, config::Config, config_validation::*,};
 
+/// The main processor of the RedStone payload.
+///
+///
+/// # Arguments
+///
+/// * `config` - Configuration of the payload processing.
+/// * `payload_bytes` - Network-specific byte-list of the payload to be processed.
 pub fn process_input(bytes: Bytes, config: Config) -> (Vec<u256>, u64) {
     let payload = Payload::from_bytes(bytes);
     config.validate_timestamps(payload);
