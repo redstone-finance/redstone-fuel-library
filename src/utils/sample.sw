@@ -155,15 +155,15 @@ impl SamplePayload {
     }
 
     pub fn big_timestamp_span() -> SamplePayload {
-        Self::sample(Vec::new().with(SAMPLE_ID_V27).with(SAMPLE_ID_V28))
+        Self::sample(Vec::<u64>::new().with(SAMPLE_ID_V27).with(SAMPLE_ID_V28))
     }
 
     pub fn eth_btc_2x2() -> SamplePayload {
-        Self::sample(Vec::new().with(2).with(3).with(4).with(5))
+        Self::sample(Vec::<u64>::new().with(2).with(3).with(4).with(5))
     }
 
     pub fn eth_btc_2plus1() -> SamplePayload {
-        Self::sample(Vec::new().with(2).with(3).with(4))
+        Self::sample(Vec::<u64>::new().with(2).with(3).with(4))
     }
 }
 

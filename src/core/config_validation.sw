@@ -50,17 +50,17 @@ impl Validation for Config {
 }
 
 fn make_results() -> Vec<Vec<u256>> {
-    let mut results = Vec::new();
+    let mut results = Vec::<Vec<u256>>::new();
 
-    let set1 = Vec::new().with(0x111u256).with(0x777u256);
-    let set2 = Vec::new().with(0x444u256).with(0x555u256).with(0x666u256);
-    let set3 = Vec::new().with(0x222u256).with(0x333u256);
+    let set1 = Vec::<u256>::new().with(0x111u256).with(0x777u256);
+    let set2 = Vec::<u256>::new().with(0x444u256).with(0x555u256).with(0x666u256);
+    let set3 = Vec::<u256>::new().with(0x222u256).with(0x333u256);
 
     results.with(set1).with(set2).with(set3)
 }
 
 fn make_config(signer_count_threshold: u64) -> Config {
-    let feed_ids = Vec::new().with(0x444444u256).with(0x445566u256).with(0x556644u256);
+    let feed_ids = Vec::<u256>::new().with(0x444444u256).with(0x445566u256).with(0x556644u256);
 
     let config = Config {
         feed_ids,
