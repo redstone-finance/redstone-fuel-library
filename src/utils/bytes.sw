@@ -1,7 +1,7 @@
 library;
 
 use std::{bytes::*, bytes_conversions::u256::*, math::*};
-use ::utils::{from_bytes::FromBytes, from_bytes_convertible::*};
+use ::utils::{from_bytes::FromBytes,};
 
 impl Bytes {
     pub fn with(self, byte: u8) -> Bytes {

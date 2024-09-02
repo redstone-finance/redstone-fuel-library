@@ -2,14 +2,7 @@ library;
 
 use std::bytes::*;
 use ::utils::{bytes::*, from_bytes::FromBytes, sample::SamplePayload, vec::*};
-use ::protocol::{
-    constants::*,
-    data_package::{
-        DataPackage,
-        make_data_package,
-    },
-    data_point::DataPoint,
-};
+use ::protocol::{constants::*, data_package::*, data_point::*,};
 
 pub struct Payload {
     pub data_packages: Vec<DataPackage>,
@@ -58,12 +51,12 @@ impl FromBytes for Payload {
 
 #[test]
 fn test_payload_from_bytes() {
-    let sample = SamplePayload::sample(Vec::new().with(0));
+    let sample = SamplePayload::sample(Vec::<u64>::new().with(0));
     let payload = Payload::from_bytes(sample.bytes());
 
     let data_package = DataPackage {
         signer_address: sample.data_packages.get(0).unwrap().signer_address,
-        data_points: Vec::new().with(DataPoint {
+        data_points: Vec::<DataPoint>::new().with(DataPoint {
             feed_id: 0x455448u256,
             value: 0x2603c77cf6u256,
         }),
@@ -72,26 +65,26 @@ fn test_payload_from_bytes() {
 
     assert(
         Payload {
-            data_packages: Vec::new().with(data_package),
+            data_packages: Vec::<DataPackage>::new().with(data_package),
         } == payload,
     );
 }
 
 #[test(should_revert)]
 fn test_payload_from_bytes_longer_marker() {
-    let sample = SamplePayload::sample(Vec::new().with(0));
+    let sample = SamplePayload::sample(Vec::<u64>::new().with(0));
     let _ = Payload::from_bytes(sample.bytes().with(0x00));
 }
 
 #[test(should_revert)]
 fn test_payload_from_bytes_shorter_marker() {
-    let sample = SamplePayload::sample(Vec::new().with(0));
+    let sample = SamplePayload::sample(Vec::<u64>::new().with(0));
     let _ = Payload::from_bytes(sample.bytes().cut(1));
 }
 
 #[test(should_revert)]
 fn test_payload_from_bytes_changed_marker() {
-    let sample = SamplePayload::sample(Vec::new().with(0));
+    let sample = SamplePayload::sample(Vec::<u64>::new().with(0));
     let mut bytes = sample.bytes();
     bytes.swap(bytes.len() - 4, bytes.len() - 3);
     let _ = Payload::from_bytes(bytes);
@@ -99,7 +92,7 @@ fn test_payload_from_bytes_changed_marker() {
 
 #[test(should_revert)]
 fn test_payload_from_bytes_additional_prefix_character() {
-    let sample = SamplePayload::sample(Vec::new().with(0));
+    let sample = SamplePayload::sample(Vec::<u64>::new().with(0));
     let mut bytes = sample.bytes();
     bytes.insert(0, 0x00);
     let _ = Payload::from_bytes(bytes);

@@ -116,42 +116,42 @@ fn test_avg_with() {
 
 #[test]
 fn test_median_single_value() {
-    let data = Vec::new().with(0x333u256);
+    let data = Vec::<u256>::new().with(0x333u256);
 
     assert(data.median() == 0x333u256);
 }
 
 #[test]
 fn test_median_two_values() {
-    let data = Vec::new().with(0x333u256).with(0x222u256);
+    let data = Vec::<u256>::new().with(0x333u256).with(0x222u256);
 
     assert(data.median() == 0x2aau256);
 }
 
 #[test]
 fn test_median_three_values() {
-    let data = Vec::new().with(0x444u256).with(0x222u256).with(0x333u256);
+    let data = Vec::<u256>::new().with(0x444u256).with(0x222u256).with(0x333u256);
 
     assert(data.median() == 0x333u256);
 }
 
 #[test]
 fn test_median_four_values() {
-    let data = Vec::new().with(0x444u256).with(0x222u256).with(0x111u256).with(0x555u256);
+    let data = Vec::<u256>::new().with(0x444u256).with(0x222u256).with(0x111u256).with(0x555u256);
 
     assert(data.median() == 0x333u256);
 }
 
 #[test]
 fn test_median_five_values() {
-    let data = Vec::new().with(0x444u256).with(0x222u256).with(0x111u256).with(0x333u256).with(0x555u256);
+    let data = Vec::<u256>::new().with(0x444u256).with(0x222u256).with(0x111u256).with(0x333u256).with(0x555u256);
 
     assert(data.median() == 0x333u256);
 }
 
 #[test]
 fn test_median_three_other_values() {
-    let data = Vec::new().with(0x222u256).with(0x222u256).with(0x333u256);
+    let data = Vec::<u256>::new().with(0x222u256).with(0x222u256).with(0x333u256);
 
     assert(data.median() == 0x222u256);
 }

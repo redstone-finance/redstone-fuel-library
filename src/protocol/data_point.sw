@@ -1,12 +1,7 @@
 library;
 
 use std::bytes::*;
-use ::utils::{
-    bytes::*,
-    from_bytes::FromBytes,
-    from_bytes_convertible::*,
-    sample::SampleDataPackage,
-};
+use ::utils::{bytes::*, from_bytes::FromBytes, sample::SampleDataPackage,};
 use ::protocol::constants::*;
 
 pub struct DataPoint {
