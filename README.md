@@ -1,4 +1,4 @@
-This repository is the integral part of the https://github.com/redstone-finance/redstone-oracles-monorepo repository,
+This repository is an integral part of the https://github.com/redstone-finance/redstone-oracles-monorepo repository,
 especially of the fuel-connector
 package (https://github.com/redstone-finance/redstone-oracles-monorepo/tree/main/packages/fuel-connector)
 and is subject of all their licenses.
@@ -12,7 +12,7 @@ Write the following to your `Forc.toml` file:
 
 ```toml
 [dependencies]
-redstone = { git = "https://github.com/redstone-finance/redstone-fuel-sdk", tag = "testnet-0.61.2" }
+redstone = { git = "https://github.com/redstone-finance/redstone-fuel-sdk", branch = "sway-0.63.1" }
 ```
 
 To process a RedStone payload (with the structure
@@ -30,7 +30,7 @@ fn get_timestamp() -> u64 {
 }
 
 fn process_payload(feed_ids: Vec<u256>, payload_bytes: Bytes) -> (Vec<u256>, u64) {
-    let signers = Vec::new().with(0x00000000000000000000000012470f7aba85c8b81d63137dd5925d6ee114952b);
+    let signers: Vec<b256> = Vec::new().with(0x00000000000000000000000012470f7aba85c8b81d63137dd5925d6ee114952b);
     let signer_count_threshold = 1; // for example, a value stored in the contract
     let config = Config {
         feed_ids,
@@ -48,7 +48,7 @@ consisting of hex-values of the particular letters in the string. For example:
 `ETH` as a `u256` is `0x455448u256` in hex or `4543560` in decimal,
 as `256*256*ord('E')+256*ord('T')+ord('H')`.
 <br />
-📟 To convert particular values you can use the https://cairo-utils-web.vercel.app/ endpoint.<br />
+📟 To convert particular values, you can use the https://cairo-utils-web.vercel.app/ endpoint.<br />
 
 The data packages transferred to the contract are being verified by signature checking.
 To be counted to achieve the `signer_count_threshold`, the signer signing the passed data
