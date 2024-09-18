@@ -1,7 +1,7 @@
 library;
 
 use std::vec::*;
-use ::utils::{from_bytes::*, vec::*};
+use ::utils::{from_bytes::*, test_helpers::*, vec::*};
 
 impl Vec<Vec<u256>> {
     pub fn aggregated(self) -> Vec<u256> {

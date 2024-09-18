@@ -20,7 +20,7 @@ use std::{
 use ::utils::sample::{SAMPLE_ID_V27, SAMPLE_ID_V28, SampleDataPackage};
 
 pub fn recover_signer_address(signature_bytes: Bytes, signable_bytes: Bytes) -> b256 {
-    let (r_bytes, mut s_bytes) = signature_bytes.slice_tail_offset(32, 1);
+    let (r_bytes, s_bytes) = signature_bytes.slice_tail_offset(32, 1);
     let v = signature_bytes.get(signature_bytes.len() - 1).unwrap();
     let r_number = b256::from_be_bytes(r_bytes);
     let s_number = b256::from_be_bytes(s_bytes);
@@ -38,13 +38,13 @@ fn recover_public_address(
     v: u8,
     msg_hash: b256,
 ) -> Result<EvmAddress, EcRecoverError> {
-    let mut v_256: b256 = ZERO_B256;
-    if (v == 28) {
-        v_256 = 0x0000000000000000000000000000000000000000000000000000000000000001;
-    }
+    let v_256 = (if (v == 28) {
+        0x0000000000000000000000000000000000000000000000000000000000000001
+    } else {
+        ZERO_B256
+    });
 
-    let mut s_with_parity = s | (v_256 << 255);
-
+    let s_with_parity = s | (v_256 << 255);
     let signature = B512::from((r, s_with_parity));
 
     ec_recover_evm_address(signature, msg_hash)

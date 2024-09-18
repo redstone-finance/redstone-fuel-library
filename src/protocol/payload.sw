@@ -1,7 +1,7 @@
 library;
 
 use std::bytes::*;
-use ::utils::{bytes::*, from_bytes::FromBytes, sample::SamplePayload, vec::*};
+use ::utils::{bytes::*, from_bytes::FromBytes, sample::SamplePayload, test_helpers::*, vec::*};
 use ::protocol::{
     constants::*,
     data_package::{
