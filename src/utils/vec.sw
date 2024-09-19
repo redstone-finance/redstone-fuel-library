@@ -1,6 +1,7 @@
 library;
 
 use std::vec::*;
+use ::utils::{numbers::*, test_helpers::With};
 
 impl<T> Vec<T>
 where
@@ -36,43 +37,6 @@ where
     }
 }
 
-impl<T> Vec<T> {
-    pub fn with(self, value: T) -> Self {
-        let mut vec = self;
-        vec.push(value);
-
-        vec
-    }
-}
-
-impl<T> Eq for Vec<T>
-where
-    T: Eq,
-{
-    fn eq(self, other: Self) -> bool {
-        if (self.len() != other.len()) {
-            return false;
-        }
-
-        let mut i = 0;
-        while (i < self.len()) {
-            if self.get(i).unwrap() != other.get(i).unwrap() {
-                return false;
-            }
-
-            i += 1;
-        }
-
-        true
-    }
-}
-
-impl u256 {
-    fn avg_with(self, other: Self) -> Self {
-        self.rsh(1) + other.rsh(1) + (self % 2 + other % 2) / 2
-    }
-}
-
 impl Vec<u256> {
     pub fn median(self) -> u256 {
         match self.len() {
@@ -93,25 +57,6 @@ impl Vec<u256> {
             }
         }
     }
-
-    pub fn log(self) {
-        let mut i = 0;
-        while (i < self.len()) {
-            log(self.get(i).unwrap());
-            i += 1;
-        }
-    }
-}
-
-#[test]
-fn test_avg_with() {
-    assert(0x444u256.avg_with(0x222u256) == 0x333u256);
-    assert(0x444u256.avg_with(0x444u256) == 0x444u256);
-    assert(0x444u256.avg_with(0x0u256) == 0x222u256);
-    assert(0x333u256.avg_with(0x222u256) == 0x2aau256);
-    assert(0x333u256.avg_with(0x333u256) == 0x333u256);
-    assert(0x0u256.avg_with(0x0u256) == 0x0u256);
-    assert(u256::max().avg_with(u256::max()) == u256::max());
 }
 
 #[test]

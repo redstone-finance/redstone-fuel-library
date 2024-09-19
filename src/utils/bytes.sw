@@ -4,13 +4,6 @@ use std::{bytes::*, bytes_conversions::u256::*, math::*};
 use ::utils::{from_bytes::FromBytes, from_bytes_convertible::*};
 
 impl Bytes {
-    pub fn with(self, byte: u8) -> Bytes {
-        let mut bytes = self;
-        bytes.push(byte);
-
-        bytes
-    }
-
     pub fn cut(self, offset: u64) -> Bytes {
         let (head, _) = self.split_at(self.len() - offset);
 

@@ -1,7 +1,7 @@
 library;
 
 use std::bytes::*;
-use ::utils::{bytes::*, from_bytes::FromBytes, sample::SamplePayload, vec::*};
+use ::utils::{bytes::*, from_bytes::FromBytes, sample::SamplePayload, test_helpers::*, vec::*};
 use ::protocol::{
     constants::*,
     data_package::{
@@ -21,8 +21,8 @@ impl Eq for Payload {
     }
 }
 
-impl FromBytes for Payload {
-    fn from_bytes(bytes: Bytes) -> Self {
+impl Payload {
+    pub fn from_bytes(bytes: Bytes) -> Self {
         let (marker_rest, marker_bytes) = bytes.slice_tail(REDSTONE_MARKER_BS);
         let mut i = 0;
         while (i < REDSTONE_MARKER_BS) {

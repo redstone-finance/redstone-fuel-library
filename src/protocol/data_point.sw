@@ -6,6 +6,7 @@ use ::utils::{
     from_bytes::FromBytes,
     from_bytes_convertible::*,
     sample::SampleDataPackage,
+    test_helpers::*,
 };
 use ::protocol::constants::*;
 
@@ -20,8 +21,8 @@ impl Eq for DataPoint {
     }
 }
 
-impl FromBytes for DataPoint {
-    fn from_bytes(bytes: Bytes) -> Self {
+impl DataPoint {
+    pub fn from_bytes(bytes: Bytes) -> Self {
         let (feed_id_bytes, value_bytes) = bytes.slice_tail(bytes.len() - DATA_FEED_ID_BS);
 
         Self {
