@@ -21,8 +21,8 @@ impl Eq for DataPoint {
     }
 }
 
-impl FromBytes for DataPoint {
-    fn from_bytes(bytes: Bytes) -> Self {
+impl DataPoint {
+    pub fn from_bytes(bytes: Bytes) -> Self {
         let (feed_id_bytes, value_bytes) = bytes.slice_tail(bytes.len() - DATA_FEED_ID_BS);
 
         Self {
