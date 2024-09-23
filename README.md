@@ -3,20 +3,19 @@ especially of the fuel-connector
 package (https://github.com/redstone-finance/redstone-oracles-monorepo/tree/main/packages/fuel-connector)
 and is subject of all their licenses.
 
-### Usage:
+### Usage
 
 📟
-Prerequisites: [Read how the RedStone Oracles work](https://docs.redstone.finance/docs/smart-contract-devs/how-it-works).
+Prerequisites: [Read how the RedStone Oracles work](https://docs.redstone.finance/docs/Introduction/).
 
 Write the following to your `Forc.toml` file:
 
 ```toml
 [dependencies]
-redstone = { git = "https://github.com/redstone-finance/redstone-fuel-sdk", branch = "sway-0.63.1" }
+redstone = { git = "https://github.com/redstone-finance/redstone-fuel-sdk", branch = "testnet-0.63.6" }
 ```
 
-To process a RedStone payload (with the structure
-defined [here](https://docs.redstone.finance/docs/smart-contract-devs/how-it-works#data-packing-off-chain-data-encoding))
+To process a RedStone payload (with the structure defined [here](hhttps://docs.redstone.finance/img/payload.png))
 for a defined list of `feed_ids`, write the `.sw` file as follows:
 
 ```rust
