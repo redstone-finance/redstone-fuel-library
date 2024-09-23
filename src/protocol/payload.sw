@@ -1,7 +1,7 @@
 library;
 
 use std::bytes::*;
-use ::utils::{bytes::*, from_bytes::FromBytes, sample::SamplePayload, test_helpers::*, vec::*};
+use ::utils::{bytes::*, from_bytes::FromBytes, sample::*, test_helpers::*, vec::*};
 use ::protocol::{
     constants::*,
     data_package::{
@@ -64,10 +64,10 @@ fn test_payload_from_bytes() {
     let data_package = DataPackage {
         signer_address: sample.data_packages.get(0).unwrap().signer_address,
         data_points: Vec::<DataPoint>::new().with(DataPoint {
-            feed_id: 0x455448u256,
-            value: 0x2603c77cf6u256,
+            feed_id: ETH,
+            value: SAMPLE_ETH_PRICE_0,
         }),
-        timestamp: 0x18697ef5550,
+        timestamp: SAMPLE_TIMESTAMP * 1000,
     };
 
     assert(
@@ -103,4 +103,14 @@ fn test_payload_from_bytes_additional_prefix_character() {
     let mut bytes = sample.bytes();
     bytes.insert(0, 0x00);
     let _ = Payload::from_bytes(bytes);
+}
+
+#[test]
+fn test_payload_from_bytes_empty() {
+    let sample = SamplePayload::sample(Vec::<u64>::new());
+    let payload = Payload::from_bytes(sample.bytes());
+
+    assert(Payload {
+        data_packages: Vec::<DataPackage>::new(),
+    } == payload);
 }

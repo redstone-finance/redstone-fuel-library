@@ -3,8 +3,31 @@ library;
 use std::bytes::*;
 use ::utils::{bytes::*, vec::*};
 
-pub const SAMPLE_SIGNER_ADDRESS_0 = 0x00000000000000000000000012470f7aBA85c8b81D63137DD5925D6EE114952b;
-pub const SAMPLE_SIGNER_ADDRESS_1 = 0x0000000000000000000000001ea62d73edf8ac05dfcea1a34b9796e937a29eff;
+pub const SAMPLE_SIGNER_ADDRESS_0 = 0x000000000000000000000000ad05Ce43E0bCD11345f08a28995951DEc30D5226;
+pub const SAMPLE_SIGNER_ADDRESS_1 = 0x000000000000000000000000dE13FdEE7a9B483129a81794d02FCB4021069f0C;
+
+pub const SAMPLE_ETH_PRICE_0 = 0x38b8d93cdfu256;
+pub const SAMPLE_ETH_PRICE_1 = 0x38ba3376e5u256;
+pub const SAMPLE_BTC_PRICE_0 = 0x58f356b791eu256;
+pub const SAMPLE_BTC_PRICE_1 = 0x58f32c910a0u256;
+
+pub const SAMPLE_TIMESTAMP = 1727881330;
+pub const DIFFERENT_TIMESTAMP = 1728055861;
+
+pub const AVAX = 0x41564158u256;
+pub const BTC = 0x425443u256;
+pub const ETH = 0x455448u256;
+
+pub const SAMPLE_ID_V27 = 0;
+pub const SAMPLE_ID_V28 = 5;
+pub const SAMPLE_ID_MALLEABILITY = 6;
+
+const SAMPLE_ID_ETH_SIGNER_0 = 0;
+const SAMPLE_ID_ETH_SIGNER_1 = 1;
+const SAMPLE_ID_ETH_OTHERTS_0 = 2;
+const SAMPLE_ID_ETH_OTHERTS_1 = 3;
+const SAMPLE_ID_BTC_SIGNER_0 = 4;
+const SAMPLE_ID_BTC_SIGNER_1 = 5;
 
 pub struct SamplePayload {
     pub data_packages: Vec<SampleDataPackage>,
@@ -28,65 +51,72 @@ struct SampleDataPackageInput {
     pub signer_address: b256,
 }
 
-pub const SAMPLE_ID_V27 = 0;
-pub const SAMPLE_ID_V28 = 1;
-
 const SAMPLES = [
     // 77 bytes are split into 3 parts, the first one consists of 3 bytes, the last one consists of 18 bytes + 14 bytes of zero-bytes, so we have 77-(3+18+14) = 42 zero-bytes inside:
     // 0x45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002603c77cf6018697ef555000000020000001
     // signature: 0x54bc55649dbae70cbf6279bc68485dfdd3d4915e0baae54e252af69f4c012faf34465a4d835255391ddfd36736b6d8dcd3fbb0ff5798419ea8c287936680bfc31b
+    // malleability, 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141-signature_s for the previous case
     SampleDataPackageInput {
         initial: [0x45, 0x54, 0x48],
         number_of_mid_zeroes: 42,
-        number_low: 0x00000000000000000000000000002603c77cf6018697ef555000000020000001,
-        signature_r: 0x54bc55649dbae70cbf6279bc68485dfdd3d4915e0baae54e252af69f4c012faf,
-        signature_s: 0x34465a4d835255391ddfd36736b6d8dcd3fbb0ff5798419ea8c287936680bfc3,
+        number_low: 0x000000000000000000000000000038b8d93cdf01924dc0bd5000000020000001,
+        signature_r: 0xbf817c39e0554c231da699f344b58e1c8fbcc17b2142bff13e431eababb72f95,
+        signature_s: 0x68528c52cf93a03c3dd578afb17a69c8f57a36f81312f351186ac4d2d89a48b8,
+        signature_v: 0x1c,
+        signer_address: SAMPLE_SIGNER_ADDRESS_0,
+    },
+    SampleDataPackageInput {
+        initial: [0x45, 0x54, 0x48],
+        number_of_mid_zeroes: 42,
+        number_low: 0x000000000000000000000000000038ba3376e501924dc0bd5000000020000001,
+        signature_r: 0x1d5c0dd797827f3be1c3993fb899d02507d390156826e1735dfd670fc8032070,
+        signature_s: 0x22f81053c5b7c085d9009e85ba91a8d4f462b0938cca669af6ada814c17b1f70,
+        signature_v: 0x1c,
+        signer_address: SAMPLE_SIGNER_ADDRESS_1,
+    },
+    SampleDataPackageInput {
+        initial: [0x45, 0x54, 0x48],
+        number_of_mid_zeroes: 42,
+        number_low: 0x000000000000000000000000000037ab19f5ba01925820fd5000000020000001,
+        signature_r: 0x0be65573e519bbad56fd9ac1405de27fbc26713a6bf3a912c65f374549bf61f8,
+        signature_s: 0x6829a0042c75037c2d3e3d96e24a149ac10f147f4e34bca387deda6ef5cf9dd8,
         signature_v: 0x1b,
-        signer_address: SAMPLE_SIGNER_ADDRESS_0,
+        signer_address: SAMPLE_SIGNER_ADDRESS_1,
     },
     SampleDataPackageInput {
         initial: [0x45, 0x54, 0x48],
         number_of_mid_zeroes: 42,
-        number_low: 0x0000000000000000000000000000261b2eceac01869816da8000000020000001,
-        signature_r: 0xacafa79c353f3641e653d22b34e432d8b110eea51196bac884690200c0def9ac,
-        signature_s: 0x672de77dbacde8ecff23e1976ee738eec9ad0a75933c6b9b52efa8dfa614fe5e,
-        signature_v: 0x1c,
-        signer_address: SAMPLE_SIGNER_ADDRESS_0,
-    },
-    SampleDataPackageInput {
-        initial: [0x45, 0x54, 0x48],
-        number_of_mid_zeroes: 42,
-        number_low: 0x0000000000000000000000000000248b3142440186b75caeb000000020000001,
-        signature_r: 0x333ecb944d5fc5de0dd6eb264ed2134cfb5e9b5db4933d9bfbdb15c4e71f70b7,
-        signature_s: 0x29b1be6f047d78691cd459268213e294b4d66c544e9953b88f9f0bfb2c77159b,
-        signature_v: 0x1c,
-        signer_address: SAMPLE_SIGNER_ADDRESS_0,
-    },
-    SampleDataPackageInput {
-        initial: [0x45, 0x54, 0x48],
-        number_of_mid_zeroes: 42,
-        number_low: 0x0000000000000000000000000000248c3218dc0186b75c87a000000020000001,
-        signature_r: 0x18d7684f83d8fe57447c5e23c14ada832b6567484c02117ab9294b909b043545,
-        signature_s: 0x0531c01b9882b91983032cc18504820008d798e95e1b3a68c79a11b346994a92,
+        number_low: 0x000000000000000000000000000037abfecec9019258214b7000000020000001,
+        signature_r: 0x3bebe5b70c57c05c51ecff63e5e63e4efc414396f962aa9ce07946e9c70b5bab,
+        signature_s: 0x4688cd1d16109e0f3a1340907c988784ee5bbdfc3374886957c2eafa17163245,
         signature_v: 0x1b,
         signer_address: SAMPLE_SIGNER_ADDRESS_1,
     },
     SampleDataPackageInput {
         initial: [0x42, 0x54, 0x43],
         number_of_mid_zeroes: 42,
-        number_low: 0x00000000000000000000000000020a10566cd60186b75caeb000000020000001,
-        signature_r: 0x9cc8412ef90ebdb05f20ce9df33858f79787bd4a69c5165211540bdcb619a357,
-        signature_s: 0x14a588656ba40b9b7b18117e7e4bee0587e83fb7f14b2d33086c4ecdb50dcedd,
+        number_low: 0x00000000000000000000000000058f356b791e01924dc0bd5000000020000001,
+        signature_r: 0xdde5f74d7203e6cadbdaef415a6c016a04a42aeb73999d610ef91675e23c4ca8,
+        signature_s: 0x4fe51ffc037a35c0c488345b6c53704dbe2880aac70c3011c3b6d5314f2a69a2,
         signature_v: 0x1b,
         signer_address: SAMPLE_SIGNER_ADDRESS_0,
     },
     SampleDataPackageInput {
         initial: [0x42, 0x54, 0x43],
         number_of_mid_zeroes: 42,
-        number_low: 0x00000000000000000000000000020a12aa560f0186b75c87a000000020000001,
-        signature_r: 0x899d1299b14281f0ed78660f2e714b8bfbe63b04c0e2ef7d355cd3b7502e1543,
-        signature_s: 0x642fd04f63fbd0069da79193f98c89cd5097ac1a8e3f7cd92bc9055d276ffbc4,
+        number_low: 0x00000000000000000000000000058f32c910a001924dc0bd5000000020000001,
+        signature_r: 0x6307247862e106f0d4b3cde75805ababa67325953145aa05bdd219d90a741e0e,
+        signature_s: 0x1458648a940c5092493d95712c7ef1c2626b639f3f706fa59e43c0a13a8edfc3,
         signature_v: 0x1c,
+        signer_address: SAMPLE_SIGNER_ADDRESS_1,
+    },
+    SampleDataPackageInput {
+        initial: [0x42, 0x54, 0x43],
+        number_of_mid_zeroes: 42,
+        number_low: 0x00000000000000000000000000058f32c910a001924dc0bd5000000020000001,
+        signature_r: 0x6307247862e106f0d4b3cde75805ababa67325953145aa05bdd219d90a741e0e,
+        signature_s: 0xeba79b756bf3af6db6c26a8ed3810e3c584379476fd83096218e9deb95a7617e,
+        signature_v: 0x1b,
         signer_address: SAMPLE_SIGNER_ADDRESS_1,
     },
 ];
@@ -154,16 +184,36 @@ impl SamplePayload {
         bytes
     }
 
-    pub fn big_timestamp_span() -> SamplePayload {
-        Self::sample(Vec::<u64>::new().with(SAMPLE_ID_V27).with(SAMPLE_ID_V28))
+    pub fn different_timestamps() -> SamplePayload {
+        Self::sample(Vec::<u64>::new().with(SAMPLE_ID_ETH_OTHERTS_0).with(SAMPLE_ID_ETH_OTHERTS_1))
     }
 
     pub fn eth_btc_2x2() -> SamplePayload {
-        Self::sample(Vec::<u64>::new().with(2).with(3).with(4).with(5))
+        Self::sample(
+            Vec::<u64>::new()
+                .with(SAMPLE_ID_ETH_SIGNER_0)
+                .with(SAMPLE_ID_ETH_SIGNER_1)
+                .with(SAMPLE_ID_BTC_SIGNER_1)
+                .with(SAMPLE_ID_BTC_SIGNER_0),
+        )
     }
 
     pub fn eth_btc_2plus1() -> SamplePayload {
-        Self::sample(Vec::<u64>::new().with(2).with(3).with(4))
+        Self::sample(
+            Vec::<u64>::new()
+                .with(SAMPLE_ID_ETH_SIGNER_0)
+                .with(SAMPLE_ID_ETH_SIGNER_1)
+                .with(SAMPLE_ID_BTC_SIGNER_0),
+        )
+    }
+
+    pub fn eth_duplicated_btc() -> SamplePayload {
+        Self::sample(
+            Vec::<u64>::new()
+                .with(SAMPLE_ID_BTC_SIGNER_0)
+                .with(SAMPLE_ID_BTC_SIGNER_0)
+                .with(SAMPLE_ID_ETH_SIGNER_0),
+        )
     }
 }
 

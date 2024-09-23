@@ -5,7 +5,7 @@ use ::utils::{
     bytes::*,
     from_bytes::FromBytes,
     from_bytes_convertible::*,
-    sample::SampleDataPackage,
+    sample::*,
     test_helpers::*,
 };
 use ::protocol::constants::*;
@@ -39,8 +39,8 @@ fn test_data_point_from_bytes() {
 
     assert(
         DataPoint {
-            feed_id: 0x455448u256,
-            value: 0x2603c77cf6u256,
+            feed_id: ETH,
+            value: SAMPLE_ETH_PRICE_0,
         } == DataPoint::from_bytes(data_feed_bytes),
     );
 }

@@ -9,7 +9,7 @@ impl Vec<Vec<u256>> {
         let mut i = 0;
         while (i < self.len()) {
             let values = self.get(i).unwrap();
-            aggregated.push(values.median());
+            aggregated.push(values.median().unwrap());
             i += 1;
         }
 
