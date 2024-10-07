@@ -3,12 +3,7 @@ library;
 use std::{bytes::*, logging::log, option::*, primitive_conversions::u256::*, vec::*};
 use ::protocol::payload::Payload;
 use ::utils::sample::*;
-use ::core::{
-    aggregation::*,
-    config::Config,
-    config_validation::*,
-    errors::DUPLICATED_VALUE_FOR_SIGNER,
-};
+use ::core::{aggregation::*, config::Config, config_validation::*, errors::RedStoneError,};
 
 /// The main processor of the RedStone payload.
 ///
@@ -79,13 +74,15 @@ fn get_payload_result_matrix(payload: Payload, config: Config) -> Vec<Option<u25
             }
 
             let index = config.index(feed_index.unwrap(), signer_index);
-            if (results.get(index).unwrap().is_some()) {
-                log(feed_index);
-                log(signer_index);
-                revert(DUPLICATED_VALUE_FOR_SIGNER + index);
-            }
-
+            require(
+                results
+                    .get(index)
+                    .unwrap()
+                    .is_none(),
+                RedStoneError::DuplicatedValueForSigner((data_package.signer_address, data_point.feed_id)),
+            );
             results.set(index, Some(data_point.value));
+
             j += 1;
         }
 

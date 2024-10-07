@@ -6,21 +6,17 @@ const MAX_DATA_TIMESTAMP_DELAY_SECONDS = 900; // 15 * 60
 const MAX_DATA_TIMESTAMP_AHEAD_SECONDS = 180; // 3 * 60
 pub fn validate_timestamp(timestamp: u64, block_timestamp: u64) {
     if (block_timestamp > timestamp) {
-        if (block_timestamp - timestamp > MAX_DATA_TIMESTAMP_DELAY_SECONDS * 1000)
-        {
-            log(timestamp);
-            log(block_timestamp);
-            revert(TIMESTAMP_OUT_OF_RANGE + 1);
-        }
+        require(
+            block_timestamp - timestamp <= MAX_DATA_TIMESTAMP_DELAY_SECONDS * 1000,
+            RedStoneError::TimestampOutOfRange((false, block_timestamp, timestamp)),
+        );
     }
 
     if (timestamp > block_timestamp) {
-        if (timestamp - block_timestamp > MAX_DATA_TIMESTAMP_AHEAD_SECONDS * 1000)
-        {
-            log(timestamp);
-            log(block_timestamp);
-            revert(TIMESTAMP_OUT_OF_RANGE + 2);
-        }
+        require(
+            timestamp - block_timestamp <= MAX_DATA_TIMESTAMP_AHEAD_SECONDS * 1000,
+            RedStoneError::TimestampOutOfRange((true, block_timestamp, timestamp)),
+        );
     }
 }
 

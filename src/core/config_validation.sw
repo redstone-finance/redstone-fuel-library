@@ -31,11 +31,10 @@ impl Validation for Config {
         let mut i = 1;
         while (i < payload.data_packages.len()) {
             let timestamp = payload.data_packages.get(i).unwrap().timestamp;
-            if (timestamp != first_timestamp) {
-                log(timestamp);
-                log(first_timestamp);
-                revert(TIMESTAMP_DIFFERENT_THAN_OTHERS + i);
-            }
+            require(
+                timestamp == first_timestamp,
+                RedStoneError::TimestampDifferentThanOthers((first_timestamp, timestamp, i)),
+            );
 
             i += 1;
         }
@@ -47,10 +46,11 @@ impl Validation for Config {
         let mut i = 0;
         while (i < self.feed_ids.len()) {
             let values = results.get(i).unwrap();
-            if (values.len() < self.signer_count_threshold) {
-                log(values.len());
-                revert(INSUFFICIENT_SIGNER_COUNT + i);
-            }
+            require(
+                values
+                    .len() >= self.signer_count_threshold,
+                RedStoneError::InsufficientSignerCount((values.len(), i)),
+            );
 
             i += 1;
         }
@@ -59,11 +59,11 @@ impl Validation for Config {
     fn validate_signer(self, data_package: DataPackage, index: u64) -> u64 {
         let s = self.signer_index(data_package.signer_address);
 
-        if s.is_none() {
-            log(data_package.signer_address);
-            log(index);
-            revert(SIGNER_NOT_RECOGNIZED + index);
-        }
+        require(
+            s
+                .is_some(),
+            RedStoneError::SignerNotRecognized((data_package.signer_address, index)),
+        );
 
         s.unwrap()
     }
