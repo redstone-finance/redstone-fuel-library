@@ -19,6 +19,25 @@ where
         None
     }
 
+    pub fn find_duplicate(self) -> Option<T> {
+        let mut i = 0;
+
+        while (i < self.len()) {
+            let mut j = i + 1;
+            while (j < self.len()) {
+                if (self.get(i) == self.get(j)) {
+                    return Some(self.get(i).unwrap());
+                }
+
+                j += 1;
+            }
+
+            i += 1;
+        }
+
+        None
+    }
+
     fn sort(ref mut self)
     where
         T: Ord,
@@ -38,11 +57,11 @@ where
 }
 
 impl Vec<u256> {
-    pub fn median(self) -> u256 {
+    pub fn median(self) -> Option<u256> {
         match self.len() {
-            0 => revert(0),
-            1 => self.get(0).unwrap(),
-            2 => self.get(0).unwrap().avg_with(self.get(1).unwrap()),
+            0 => None,
+            1 => Some(self.get(0).unwrap()),
+            2 => Some(self.get(0).unwrap().avg_with(self.get(1).unwrap())),
             _ => {
                 let mut values = self;
 
@@ -50,9 +69,9 @@ impl Vec<u256> {
 
                 let mid = values.len() / 2;
                 if (values.len() % 2 == 1) {
-                    values.get(mid).unwrap()
+                    Some(values.get(mid).unwrap())
                 } else {
-                    values.get(mid).unwrap().avg_with(values.get(mid - 1).unwrap())
+                    Some(values.get(mid).unwrap().avg_with(values.get(mid - 1).unwrap()))
                 }
             }
         }
@@ -63,45 +82,80 @@ impl Vec<u256> {
 fn test_median_single_value() {
     let data = Vec::<u256>::new().with(0x333u256);
 
-    assert(data.median() == 0x333u256);
+    assert(data.median().unwrap() == 0x333u256);
 }
 
 #[test]
 fn test_median_two_values() {
     let data = Vec::<u256>::new().with(0x333u256).with(0x222u256);
 
-    assert(data.median() == 0x2aau256);
+    assert(data.median().unwrap() == 0x2aau256);
 }
 
 #[test]
 fn test_median_three_values() {
     let data = Vec::<u256>::new().with(0x444u256).with(0x222u256).with(0x333u256);
 
-    assert(data.median() == 0x333u256);
+    assert(data.median().unwrap() == 0x333u256);
 }
 
 #[test]
 fn test_median_four_values() {
     let data = Vec::<u256>::new().with(0x444u256).with(0x222u256).with(0x111u256).with(0x555u256);
 
-    assert(data.median() == 0x333u256);
+    assert(data.median().unwrap() == 0x333u256);
 }
 
 #[test]
 fn test_median_five_values() {
     let data = Vec::<u256>::new().with(0x444u256).with(0x222u256).with(0x111u256).with(0x333u256).with(0x555u256);
 
-    assert(data.median() == 0x333u256);
+    assert(data.median().unwrap() == 0x333u256);
 }
 
 #[test]
 fn test_median_three_other_values() {
     let data = Vec::<u256>::new().with(0x222u256).with(0x222u256).with(0x333u256);
 
-    assert(data.median() == 0x222u256);
+    assert(data.median().unwrap() == 0x222u256);
 }
 
-#[test(should_revert)]
+#[test]
 fn test_median_zero_values() {
-    let _ = Vec::<u256>::new().median();
+    assert(Vec::<u256>::new().median() == None);
+}
+
+#[test]
+fn test_find_duplicate() {
+    let data = Vec::<u256>::new().with(0x444u256).with(0x222u256).with(0x333u256);
+
+    assert(data.find_duplicate() == None);
+}
+
+#[test]
+fn test_find_duplicate_one_element() {
+    let data = Vec::<u256>::new().with(0x444u256).with(0x222u256).with(0x333u256);
+
+    assert(data.find_duplicate() == None);
+}
+
+#[test]
+fn test_find_duplicate_duplcated() {
+    let data = Vec::<u256>::new().with(0x444u256).with(0x222u256).with(0x444u256);
+
+    assert(data.find_duplicate().unwrap() == 0x444u256);
+}
+
+#[test]
+fn test_find_duplicate_duplcated_nearby() {
+    let data = Vec::<u256>::new().with(0x222u256).with(0x444u256).with(0x444u256);
+
+    assert(data.find_duplicate().unwrap() == 0x444u256);
+}
+
+#[test]
+fn test_find_duplicate_option_as_dup() {
+    let data = Vec::<Option<u256>>::new().with(Some(0x444u256)).with(Some(0x444u256)).with(None);
+
+    assert(data.find_duplicate().unwrap() == Some(0x444u256));
 }

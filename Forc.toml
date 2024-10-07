@@ -1,7 +1,7 @@
 [project]
 authors = ["Łukasz Kalbarczyk"]
 entry = "lib.sw"
-forc-version = "0.63.6"
+forc-version = "0.64.0"
 license = "BUSL"
 name = "redstone"
 organization = "RedStone"

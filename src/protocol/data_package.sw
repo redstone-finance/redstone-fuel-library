@@ -2,7 +2,7 @@ library;
 
 use std::{bytes::*, logging::log, vec::Vec};
 use ::crypto::recover::recover_signer_address;
-use ::utils::{bytes::*, from_bytes::FromBytes, sample::SampleDataPackage, test_helpers::*, vec::*};
+use ::utils::{bytes::*, from_bytes::FromBytes, sample::*, test_helpers::*, vec::*};
 use ::protocol::{constants::*, data_point::DataPoint};
 
 pub struct DataPackage {
@@ -60,10 +60,10 @@ fn test_make_data_package() {
         DataPackage {
             signer_address: sample.signer_address,
             data_points: Vec::new().with(DataPoint {
-                feed_id: 0x455448u256,
-                value: 0x2603c77cf6u256,
+                feed_id: ETH,
+                value: SAMPLE_ETH_PRICE_0,
             }),
-            timestamp: 0x18697ef5550,
+            timestamp: SAMPLE_TIMESTAMP * 1000,
         } == data_package,
     );
 }

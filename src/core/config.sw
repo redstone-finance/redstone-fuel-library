@@ -24,9 +24,9 @@ pub struct Config {
     pub signer_count_threshold: u64,
     /// The current block time in timestamp format, used for verifying data timeliness.
     ///
-    /// The value's been expressed in milliseconds since the Unix epoch (January 1, 1970) and allows
+    /// The value's been expressed in seconds since the Unix epoch (January 1, 1970) and allows
     /// for determining whether the data is current in the context of blockchain time.
-    pub block_timestamp: u64, // unix
+    pub block_timestamp: u64,
 }
 
 impl Config {
