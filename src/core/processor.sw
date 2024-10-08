@@ -6,12 +6,25 @@ use ::utils::sample::*;
 use ::core::{aggregation::*, config::Config, config_validation::*, errors::RedStoneError,};
 
 /// The main processor of the RedStone payload.
-///
+/// This function processes the provided payload bytes according to the specified configuration.
 ///
 /// # Arguments
 ///
 /// * `config` - Configuration of the payload processing.
 /// * `payload_bytes` - Network-specific byte-list of the payload to be processed.
+///
+/// # Returns
+///
+/// This function returns a tuple containing:
+///
+/// * `Vec<u256>` - A vector of processed values extracted from the payload, one for each feed_ids as in `Config`.
+/// * `u64` - The timestamp of the processed data.
+///
+/// # Example
+///
+/// ```sway
+/// let (values, size) = process_input(payload_bytes, config);
+/// ```
 pub fn process_input(bytes: Bytes, config: Config) -> (Vec<u256>, u64) {
     config.check_parameters();
 

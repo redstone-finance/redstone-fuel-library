@@ -3,6 +3,7 @@ library;
 use std::bytes::Bytes;
 use ::utils::from_bytes_convertible::*;
 
+/// obtains a value from bytes with the suitable byte size"
 pub trait FromBytes {
     fn from_bytes(bytes: Bytes) -> Self;
 }
